@@ -1,0 +1,38 @@
+<% @tickets.each do |ticket| %>
+
+    <table>
+        
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Estimation</th>
+            <th>Status</th>
+        </tr>
+     
+    
+        <tr>
+          <td><%= ticket.title %></td>
+          <td><%= ticket.description %></td>
+          <td><%= ticket.priority %></td>
+          <td><%= ticket.estimation %></td>
+          <td><%= ticket.status %></td>
+          
+          <td><%= link_to 'Show', project_ticket_path(:id => ticket.id) %></td>
+          <td><%= link_to 'Edit', edit_project_ticket_path(:id => ticket.id) %></td>
+          <td><%= link_to 'Destroy', project_ticket_path(:id => ticket.id),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        
+    </table>
+
+
+<% end %>
+
+<p>
+    <%= link_to 'New ticket', new_project_ticket_path %>
+</p>
+<p>
+    <%= link_to 'Back', @project  %>
+</p>

@@ -1,0 +1,21 @@
+<p>
+  <strong>Name:</strong>
+  <%= @project.name %>
+</p>
+ 
+<p>
+  <strong>Description:</strong>
+  <%= @project.description %>
+</p>
+
+<p>
+  <%= link_to 'Tickets', [@project, :tickets]  %>
+</p>
+
+<p>
+  <%= link_to 'Edit', edit_project_path(@project) %>
+</p>
+
+<p>
+  <%= link_to 'Back', projects_path %>
+</p>
