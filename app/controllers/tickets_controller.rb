@@ -1,5 +1,6 @@
 class TicketsController < ApplicationController
     
+    
     def index
         @statuses = Ticket.statuses
         @project = Project.find(params[:project_id])
