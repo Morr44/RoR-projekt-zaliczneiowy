@@ -18,7 +18,6 @@ class ProjectsController < ApplicationController
   end
   
   def update
-    
     @project = Project.find(params[:id])
     
     if @project.update(project_params)
@@ -38,7 +37,8 @@ class ProjectsController < ApplicationController
   
   def create
     @project = Project.new(project_params)
-    
+    @project.owner = current_user
+    @project.users << current_user
     if @project.save
       redirect_to @project
     else
@@ -47,11 +47,23 @@ class ProjectsController < ApplicationController
     
   end
 
+  def new_associate
+
+  end
+  
+  def save_associate
+    
+  end
 
   private
     def project_params
       params.require(:project).permit(:name, :description)
     end
-  
+    
+    def associate_params
+      
+    end
+    
+    
   
 end
