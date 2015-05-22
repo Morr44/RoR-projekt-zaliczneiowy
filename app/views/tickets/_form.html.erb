@@ -1,4 +1,22 @@
-<%= form_for([@project, @ticket]) do |f| %>
+<%= form_for [@project, @ticket], :html => { :multipart => true } do |f| %>
+  
+  <%= javascript_tag do %>
+  $(document).ready(function(){
+  
+    if(!$("#ticket_attach").is(':checked') ) {
+      $("#attachment-form").hide();
+    }
+  
+    $("#ticket_attach").click(function(){
+          if(this.checked) {
+            $("#attachment-form").show();
+          } else {
+            $("#attachment-form").hide();
+          }
+    });
+  });
+
+  <% end %>
   
   <% if @ticket.errors.any? %>
     <div id="error_explanation">
@@ -34,6 +52,26 @@
     <%= f.number_field :estimation %>
   </p>
   
+  <p>
+    
+    <label>
+    <%= f.check_box :attach %>
+    Attach image
+    </label>
+    
+    <div id="attachment-form" style="padding:5px; border:1px #CCCCCC dashed">
+      <p>
+        <%= f.label :attachment_name %><br>
+        <%= f.text_field :attachment_name %>
+      </p>
+      <p>
+        <%= f.file_field :attachment %>
+      </p>
+    </div>
+  </p>
+  
+
+
   <p>
     <%= f.select :status, options_for_select(@statuses.map {|k, v| [k, k]}) %>
   </p>

@@ -1,0 +1,25 @@
+<tshirt color="" gender="">
+
+	<layer id="">
+		<offsetx></offsetx>
+		<offsety></offsety>
+		<scale></scale>
+		<rotaton></rotation>
+		<image></image>
+		<material></material>
+
+	</layer>
+
+	[...]
+
+
+</tshirt>
+
+
+color = in hex code, for example "#329797"
+gender = "Male" or "Female"
+
+id = "Front" or "Back" or [...]
+
+<image> Image id + image file extension (stored in variable called image) </image>
+<material> some integer that will define material of a layer (stored in variable called imageMaterial) </material>
