@@ -1,7 +1,7 @@
 class Ticket < ActiveRecord::Base
   belongs_to :project
   
-  has_attached_file :attachment, styles: { small: "64x64", med: "100x100", large: "200x200" }
+  has_attached_file :attachment, styles: { small: "64x64", med: "100x100", large: "200x200" }, :default_url => "/missing_resource.txt"
   validates_attachment_content_type :attachment, :content_type => [
     
     "image/jpg",
@@ -13,7 +13,7 @@ class Ticket < ActiveRecord::Base
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
     "text/plain" 
-  ], :default_url => "/images/missing.png"
+  ]
   
   validates :title, presence: true
   validates :description, presence: true
