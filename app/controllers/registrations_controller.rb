@@ -9,7 +9,7 @@ class RegistrationsController < Devise::RegistrationsController
         sign_in(resource_name, resource)
     else
        @project = Project.find(params[:project_id])
-       @project.users << self.resource
+       @project.add_associate self.resource
         
     end
     

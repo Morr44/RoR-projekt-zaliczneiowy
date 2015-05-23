@@ -5,4 +5,14 @@ class Project < ActiveRecord::Base
     
     validates :name, presence: true
     
+    def set_owner(user)
+        if self.users.include?(user)
+            self.owner = user
+        end
+    end
+    
+    def add_associate(user)
+        self.users << user
+    end
+    
 end

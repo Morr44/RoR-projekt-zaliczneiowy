@@ -37,8 +37,9 @@ class ProjectsController < ApplicationController
   
   def create
     @project = Project.new(project_params)
-    @project.owner = current_user
-    @project.users << current_user
+    @project.add_associate current_user
+    @project.set_owner current_user
+    
     if @project.save
       redirect_to @project
     else
@@ -54,10 +55,6 @@ class ProjectsController < ApplicationController
   private
     def project_params
       params.require(:project).permit(:name, :description)
-    end
-    
-    def associate_params
-      
     end
     
     
