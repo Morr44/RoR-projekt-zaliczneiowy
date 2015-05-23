@@ -56,7 +56,7 @@
     
     <label>
     <%= f.check_box :attach %>
-    Attach image
+    <%= f.label :attach, 'Attachment' %>
     </label>
     
     <div id="attachment-form" style="padding:5px; border:1px #CCCCCC dashed">
@@ -73,7 +73,7 @@
 
 
   <p>
-    <%= f.select :status, options_for_select(@statuses.map {|k, v| [k, k]}) %>
+    <%= f.select :status, options_for_select(Ticket.statuses.keys, 0) %>
   </p>
   
   <p>

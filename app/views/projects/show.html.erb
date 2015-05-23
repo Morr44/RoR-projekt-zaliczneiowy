@@ -9,11 +9,25 @@
 </p>
 
 <p>
-  <strong>Project owner:</strong>
-  <%= @project.owner.email %>
+  <strong>Developers:</strong>
+  <% @project.users.each do |u| %>
+    <p>
+      <%= u.email %>
+      <%= u.first_name %>
+      <%= u.last_name %>
+      <% if u.email==@project.owner.email %>
+        (Project owner)
+      <% end %>
+    <p>
+  <% end %>
+  
 
 </p>
 
+
+<p>
+  <%= link_to 'Create new developer account', action: 'new_associate' %>
+</p>
 
 <p>
   <%= link_to 'Tickets', [@project, :tickets]  %>

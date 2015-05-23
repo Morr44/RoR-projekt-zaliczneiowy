@@ -48,11 +48,7 @@ class ProjectsController < ApplicationController
   end
 
   def new_associate
-
-  end
-  
-  def save_associate
-    
+    @project = Project.find(params[:id])
   end
 
   private
