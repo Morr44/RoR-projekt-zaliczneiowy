@@ -7,7 +7,7 @@ FactoryGirl.define do
     description {Faker::Lorem.sentence}
     priority {Faker::Number.number(1)}
     estimation {Faker::Number.number(2)}
-    status rand(0..2)
+    status {rand(0..2)}
     
   end
 end

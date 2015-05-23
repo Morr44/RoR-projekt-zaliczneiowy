@@ -12,11 +12,9 @@
   <strong>Developers:</strong>
   <% @project.users.each do |u| %>
     <p>
-      <%= u.email %>
-      <%= u.first_name %>
-      <%= u.last_name %>
+      <%= u.get_description %>
       <% if u.email==@project.owner.email %>
-        (Project owner)
+      <strong>(Project owner)</strong>
       <% end %>
     <p>
   <% end %>

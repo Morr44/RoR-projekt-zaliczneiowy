@@ -54,7 +54,7 @@
   
   </p>
     <%= f.label 'Assigned to' %><br>
-    <%= f.select :user_id, options_for_select(@project.users.map do |u| ["#{u.first_name} #{u.last_name} (#{u.email})", u.email] end, @ticket.user_id), {include_blank: true} %>
+    <%= f.select :user_id, options_for_select(@project.users.map do |u| [u.get_description, u.email] end, @ticket.user_id), {include_blank: true} %>
   </p>
   
   <p>

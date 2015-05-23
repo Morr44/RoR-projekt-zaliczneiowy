@@ -8,4 +8,9 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :projectst
   has_many :tickets
   
+  def get_description
+    [self.first_name, self.last_name, self.email].join(" ")
+  end
+  
+  
 end
