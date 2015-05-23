@@ -1,6 +1,8 @@
+require 'faker'
+
 FactoryGirl.define do
     factory :project do |f|
-        f.name "Test project"
-        f.description "Project's description"
+        sequence(:name) { |n| "Project #{n} name" }
+        f.description {Faker::Lorem.sentence}
     end
 end

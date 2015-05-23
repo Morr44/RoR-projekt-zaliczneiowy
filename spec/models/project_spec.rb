@@ -72,9 +72,5 @@ describe Project do
     
     end
     
-    describe "tests related to tickets" do
-    
-    
-    end
     
 end
