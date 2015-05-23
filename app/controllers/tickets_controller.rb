@@ -83,6 +83,6 @@ class TicketsController < ApplicationController
     
     private
         def ticket_params
-            params.require(:ticket).permit(:title, :description, :priority, :estimation, :status, :attachment, :attachment_name)
+            params.require(:ticket).permit(:title, :description, :priority, :estimation, :status, :attachment, :attachment_name, :user_id)
         end
 end

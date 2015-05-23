@@ -52,6 +52,11 @@
     <%= f.number_field :estimation %>
   </p>
   
+  </p>
+    <%= f.label 'Assigned to' %><br>
+    <%= f.select :user_id, options_for_select(@project.users.map do |u| ["#{u.first_name} #{u.last_name} (#{u.email})", u.email] end, @ticket.user_id), {include_blank: true} %>
+  </p>
+  
   <p>
     
     <label>
@@ -73,8 +78,10 @@
 
 
   <p>
-    <%= f.select :status, options_for_select(Ticket.statuses.keys, 0) %>
+    <%= f.select :status, options_for_select(Ticket.statuses.keys, @ticket.status) %>
   </p>
+  
+
   
   <p>
     <%= f.submit %>

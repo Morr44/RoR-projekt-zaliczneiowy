@@ -1,6 +1,6 @@
 class Ticket < ActiveRecord::Base
   belongs_to :project
-  
+  belongs_to :user
   has_attached_file :attachment, styles: { small: "64x64", med: "100x100", large: "200x200" }, :default_url => "/missing_resource.txt"
   validates_attachment_content_type :attachment, :content_type => [
     
