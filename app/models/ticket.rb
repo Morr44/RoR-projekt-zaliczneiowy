@@ -24,6 +24,7 @@ class Ticket < ActiveRecord::Base
   def delete_attachment
     self.attachment.destroy
     self.attachment.clear
+    self.attachment_name = nil;
   end
   
   def attach
