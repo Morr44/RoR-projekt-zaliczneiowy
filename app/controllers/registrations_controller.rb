@@ -10,6 +10,7 @@ class RegistrationsController < Devise::RegistrationsController
     else
        @project = Project.find(params[:project_id])
        @project.add_associate self.resource
+       redirect_to @project
         
     end
     

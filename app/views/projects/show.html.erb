@@ -13,9 +13,9 @@
   <% @project.users.each do |u| %>
     <p>
       <%= u.get_description %>
-      <% if u.email==@project.owner.email %>
-      <strong>(Project owner)</strong>
-      <% end %>
+        <% if u==@project.owner %>
+          <strong>(Project owner)</strong>
+        <% end %>
     <p>
   <% end %>
   
@@ -23,18 +23,160 @@
 </p>
 
 
-<p>
-  <%= link_to 'Create new developer account', action: 'new_associate' %>
-</p>
+<% if @project.users.include?(current_user) %>
+  <p>
+      <%= link_to 'Tickets', [@project, :tickets], class: "btn btn-default", role: "button"  %>
+  </p>
+  <% unless @project.owner == current_user %>
+    <p>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#quitProject">Quit project</button>
+    </p>
+  <% end %>
+<% end %>
+
+
+<% if @project.owner == current_user %>
+
+  <p>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeOwner">Change owner</button>
+  </p>
+  
+  <p>
+    <%= link_to 'Create new developer account', {:action => :new_associate}, class: "btn btn-default", role: "button"  %>
+  </p>
+  
+  <p>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#forceQuit">Remove developer</button>
+  </p>
+  
+  <p>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#invite">Invite developer</button>
+  </p>
+  
+  <p>
+    <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-default", role: "button"  %>
+  </p>
+  
+
+  
+<% end %>
+
 
 <p>
-  <%= link_to 'Tickets', [@project, :tickets]  %>
+  <%= link_to 'Back', projects_path, class: "btn btn-primary", role: "button" %>
 </p>
 
-<p>
-  <%= link_to 'Edit', edit_project_path(@project) %>
-</p>
 
-<p>
-  <%= link_to 'Back', projects_path %>
-</p>
+
+
+
+
+
+<div id="quitProject" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Quit project</h3>
+      </div>
+      <div class="modal-body">
+        Are you sure that you want to quit project?<br>
+
+      </div>
+      <div class="modal-footer">
+        <%= link_to "Quit", {:action => :quit}, class: "btn btn-default", role: "button" %>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div id="forceQuit" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      
+      <%= form_for @project, url: {action: "force_quit"} do |f| %>
+      <div class="modal-header">
+        <h3>Choose a user to be removed from developers list</h3>
+      </div>
+      <div class="modal-body">
+          <p>
+            <%= f.select :users, options_for_select((@project.users.select{|u| u != current_user}).map do |u| [u.get_description, u.id] end) %>
+          </p>
+      </div>
+      
+      <div class="modal-footer">
+          
+          <%= f.submit "Confirm", class: "btn btn-default", role: "button" %>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+      <% end %>
+      
+    </div>
+
+  </div>
+</div>
+
+
+
+<div id="changeOwner" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      
+      <%= form_for @project, url: {action: "change_owner"} do |f| %>
+      <div class="modal-header">
+        <h3>Choose new project owner</h3>
+      </div>
+      <div class="modal-body">
+        
+          <p>
+            <%= f.select :owner_id, options_for_select(@project.users.map do |u| [u.get_description, u.id] end, current_user.id) %>
+          </p>
+          <p>
+            * note that you will no longer have owner privileges in this project
+          </p>
+      </div>
+      <div class="modal-footer">
+          
+          <%= f.submit "Confirm", class: "btn btn-default", role: "button" %>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+      <% end %>
+      
+    </div>
+
+  </div>
+</div>
+
+
+<div id="invite" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      
+      <%= form_for @project, url: {action: "invite"} do |f| %>
+      <div class="modal-header">
+        <h3>Type e-mail address</h3>
+      </div>
+      <div class="modal-body">
+          <p>
+            <%= email_field_tag 'email' %>
+          </p>
+      </div>
+      <div class="modal-footer">
+          
+          <%= f.submit "Confirm", class: "btn btn-default", role: "button" %>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          
+      </div>
+      <% end %>
+      
+    </div>
+
+  </div>
+</div>

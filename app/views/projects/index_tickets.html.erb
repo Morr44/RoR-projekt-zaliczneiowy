@@ -1,0 +1,29 @@
+
+<% def display_ticekt(ticket) %>
+    <% if ticket.reported==false %>
+        <div style="background:#EEEEEE;">
+    <% else %>
+        <div>
+    <% end %>
+        <b>Project:</b>
+        <%= ticket.project.name %>
+        <b>Ticket:</b>
+        <%= ticket.title %>
+        <%= ticket.description %>
+        
+    </div>
+    
+<% end %>
+
+
+<% @tickets.select { |t| t.reported==false }.each do |ticket| %>
+    <% display_ticekt(ticket) %>
+<% end %>
+
+<% @tickets.select { |t| t.reported==true and t.status=="open" }.each do |ticket| %>
+    <% display_ticekt(ticket) %>
+<% end %>
+
+<% @tickets.select { |t|  t.reported==true and t.status=="closed" }.each do |ticket| %>
+    <% display_ticekt(ticket) %>
+<% end %>

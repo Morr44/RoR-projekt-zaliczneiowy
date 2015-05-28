@@ -1,5 +1,5 @@
 class AddUserIdToTickets < ActiveRecord::Migration
   def change
-    add_column :tickets, :user_id, :string, references: :users
+    add_column :tickets, :user, :string, references: :users
   end
 end

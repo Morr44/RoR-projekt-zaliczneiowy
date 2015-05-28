@@ -31,9 +31,16 @@ describe Project do
                 expect(@project.users).to be_empty
             end
             
-            it "adds user to users array" do
+            it "adds user to associates list" do
                 @project.add_associate(@user)
                 expect(@project.users).to include @user
+            end
+            
+            it "removes user form associates list" do
+                @project.add_associate(@user)
+                @project.remove_associate(@user)
+                expect(@project.users).to_not include @user
+                
             end
             
             it "available to add more than one user" do

@@ -26,37 +26,58 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">All<span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Private</a></li>
+        <li><%= link_to "Browse", projects_path %></li>
       </ul>
       
 
-      <ul class="nav navbar-nav navbar-right">
-
-        <li class="dropdown">
-
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            <% if user_signed_in? %>
-              <%= current_user.email %>
-            <% end %>
-
-          <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
+      <ul class="nav navbar-nav navbar-right ">
+        
+        <% if user_signed_in? %>
+          <li><li><%= link_to "My projects", projects_path(:private => true) %></li></li>
+          <% l = Ticket.where(:user_id => current_user.email, :reported=>false).count %>
+          <% if l>0 %>
+            <% l = "(#{l} new)" %>
+          <% else %>
+            <% l = nil %>
+          <% end %>
+          <li><%= link_to "My tickets #{l}", controller: "projects", action: "index_tickets" %></li>
+        <% end %>
+        
+        <% if user_signed_in? %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
               <% if user_signed_in? %>
-                <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
-                <li><%= link_to "Logout", destroy_user_session_path, method: :delete  %></li>
-              <% else %>
-                <li><%= link_to "Sign up", new_user_registration_path %></li>
-                <li><%= link_to "Login", new_user_session_path %></li>
+                <%= current_user.email %>
               <% end %>
+  
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                
+                  <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
+                  <li><%= link_to "Logout", destroy_user_session_path, method: :delete  %></li>
+      
+            </ul>
+          </li>
+        
+          <% else %>
+          <li>
+            <div class="btn-group" role="group" aria-label="...">
+              
+              <%= link_to "Sign up", new_user_registration_path, class: "btn btn-default btn-sm navbar-btn", role: "button" %>
+              <%= link_to "Login", new_user_session_path, class: "btn btn-primary btn-sm navbar-btn", role: "button" %>
+              
+            </div>
+          </li>
+          <% end %>
+      
 
-          </ul>
-        </li>
       </ul>
+      
     </div>
   </div>
   
 </nav>
+
 
 
 <% if notice %>
@@ -67,6 +88,7 @@
 <% end %>
 
 <div class="container-fluid">
+  
   <%= yield %>
   
 </div>

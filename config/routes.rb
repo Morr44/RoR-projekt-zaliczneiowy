@@ -2,14 +2,18 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: "registrations" }
 
-  
   resources :projects do
     resources :tickets
   end
   
   get '/projects/:id/new_associate', to: 'projects#new_associate'
-
-
+  get 'index_tickets', to: 'projects#index_tickets'
+  get '/projects/:id/quit', to: 'projects#quit'
+  patch '/projects/:id/invite', to: 'projects#invite'
+  patch '/projects/:id/change_owner', to: 'projects#change_owner'
+  patch '/projects/:id/force_quit', to: 'projects#force_quit'
+  
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

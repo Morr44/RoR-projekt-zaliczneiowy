@@ -12,7 +12,15 @@ class Project < ActiveRecord::Base
     end
     
     def add_associate(user)
-        self.users << user
+        unless self.users.include?(user)
+            self.users << user
+        end
+    end
+    
+    def remove_associate(user)
+        unless user == owner
+            self.users.delete(user)
+        end
     end
     
 end
