@@ -2,14 +2,6 @@ class TicketsController < ApplicationController
     
     before_filter :check_if_developer
     
-    def check_if_developer
-        @project = Project.find(params[:project_id])
-        unless @project.users.include?(current_user)
-            redirect_to project_path(params[:project_id])
-        end
-    end
-    
-    
     def index
         @statuses = Ticket.statuses
         @project = Project.find(params[:project_id])
@@ -99,5 +91,12 @@ class TicketsController < ApplicationController
     private
         def ticket_params
             params.require(:ticket).permit(:title, :description, :priority, :estimation, :status, :attachment, :attachment_name, :user_id, :reported)
+        end
+        
+        def check_if_developer
+            @project = Project.find(params[:project_id])
+            unless @project.users.include?(current_user)
+                redirect_to project_path(params[:project_id])
+            end
         end
 end

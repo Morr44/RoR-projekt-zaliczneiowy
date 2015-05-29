@@ -1,21 +1,35 @@
-
 <% def display_ticekt(ticket) %>
     <% if ticket.reported==false %>
-        <div style="background:#EEEEEE;">
+            <tr data-href= <%= project_ticket_path(:id => ticket.id, :project_id => ticket.project) %>>
     <% else %>
-        <div>
+            <tr data-href= <%= project_ticket_path(:id => ticket.id, :project_id => ticket.project) %>>
     <% end %>
-        <b>Project:</b>
-        <%= ticket.project.name %>
-        <b>Ticket:</b>
-        <%= ticket.title %>
-        <%= ticket.description %>
-        
-    </div>
-    
+            <td>
+                <%= ticket.project.name %>
+            </td>
+            <td>
+                <%= ticket.title %>
+            </td>
+            <td>
+                <%= ticket.description %>
+            </td>
+
+        </tr>
 <% end %>
 
 
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    
+   
 <% @tickets.select { |t| t.reported==false }.each do |ticket| %>
     <% display_ticekt(ticket) %>
 <% end %>
@@ -27,3 +41,27 @@
 <% @tickets.select { |t|  t.reported==true and t.status=="closed" }.each do |ticket| %>
     <% display_ticekt(ticket) %>
 <% end %>
+
+
+</table>
+
+  
+<%= javascript_tag do %>
+      
+    $(function(){
+        $('.table tr[data-href]').each(function(){
+            $(this).css('cursor','pointer').hover(
+                function(){ 
+                    $(this).addClass('active'); 
+                },  
+                function(){ 
+                    $(this).removeClass('active'); 
+                }).click( function(){ 
+                    document.location = $(this).attr('data-href'); 
+                }
+            );
+        });
+    });
+
+<% end %>
+

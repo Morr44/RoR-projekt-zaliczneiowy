@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
          
+
+  validates_confirmation_of :password
+  validates :password, { confirmation: true } 
   
   has_and_belongs_to_many :projects
   has_many :tickets

@@ -20,8 +20,13 @@ class ProjectsController < ApplicationController
      @project = Project.new
   end
   
-  def edit
-    @project = Project.find(params[:id])
+  def edit 
+    if check_if_owner
+      @project = Project.find(params[:id])
+    else
+      redirect_to @project
+    end
+    
   end
   
   def update
@@ -50,30 +55,44 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.find(params[:id])
-    @project.destroy
-    redirect_to projects_path
-    
+    if check_if_owner
+      @project = Project.find(params[:id])
+      @project.destroy
+      redirect_to projects_path
+    else
+      redirect_to @project
+    end
   end
 
-  def new_associate
-    @project = Project.find(params[:id])
-  end
   
   def change_owner
-    @project = Project.find(params[:id])
-    unless (params[:project][:owner_id]) == nil
-      @project.update(project_params)
+    if check_if_owner
+      @project = Project.find(params[:id])
+      unless (params[:project][:owner_id]) == nil
+        @project.update(project_params)
+      end
+      redirect_to @project
+    else
+      redirect_to @project
     end
-    redirect_to @project
     
+  end
+  
+  def new_associate
+    if check_if_owner
+      @project = Project.find(params[:id])
+    end
   end
   
   def invite
-    @project = Project.find(params[:id])
-    @user = User.where(:email => params[:email]).first
-    @project.add_associate(@user)
-    redirect_to @project
+    if check_if_owner
+      @project = Project.find(params[:id])
+      @user = User.where(:email => params[:email]).first
+      @project.add_associate(@user)
+      redirect_to @project
+    else
+      redirect_to @project
+    end
     
   end
   
@@ -93,19 +112,22 @@ class ProjectsController < ApplicationController
   end
   
   def force_quit
-    
-    @project = Project.find(params[:id])
-    @user = User.find(params[:project][:users])
-    @project.remove_associate @user
-    
-    @project.tickets.each { |t|
-      if t.user_id == @user.email
-        t.update_attributes(:user_id => nil)
-      end
-    }
-    
-    @project.update_attributes(:users => @project.users)
-    redirect_to @project
+    if check_if_owner
+      @project = Project.find(params[:id])
+      @user = User.find(params[:project][:users])
+      @project.remove_associate @user
+      
+      @project.tickets.each { |t|
+        if t.user_id == @user.email
+          t.update_attributes(:user_id => nil)
+        end
+      }
+      
+      @project.update_attributes(:users => @project.users)
+      redirect_to @project
+    else
+      redirect_to @project
+    end
     
   end
   
@@ -123,5 +145,16 @@ class ProjectsController < ApplicationController
     end
     
     
+    def check_if_owner
+      @project = Project.find(params[:id])
+      unless @project.owner == current_user
+        false
+      else
+        true
+      end
+      
+    end
+
+
   
 end
