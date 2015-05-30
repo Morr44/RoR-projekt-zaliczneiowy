@@ -4,20 +4,18 @@
     <% else %>
             <tr data-href= <%= project_ticket_path(:id => ticket.id, :project_id => ticket.project) %>>
     <% end %>
-            <td>
+            <td style="width:20%;">
                 <%= ticket.project.name %>
             </td>
-            <td>
+            <td style="width:20%;">
                 <%= ticket.title %>
             </td>
-            <td>
+            <td style="width:60%;">
                 <%= ticket.description %>
             </td>
 
         </tr>
 <% end %>
-
-
 
 
 <table class="table">

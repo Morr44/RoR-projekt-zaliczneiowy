@@ -1,19 +1,51 @@
-<table>
-  <tr>
-    <th>Nazwa</th>
-    <th>Opis</th>
-  </tr>
- 
-  <% @projects.each do |project| %>
-    <tr>
-      <td><%= project.name %></td>
-      <td><%= project.description %></td>
-      <td><%= link_to 'Show', project_path(project) %></td>
-    </tr>
-  <% end %>
+
+<table class="table table-hover">
   
+  <thead>
+    <tr>
+      <th>Project name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr data-href= <%= project_path(project) %>>
+        
+        <td><%= project.name %></td>
+        <td style="width:75%;"><%= project.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
   
   
 </table>
 
-<%= link_to 'New project', new_project_path %>
+
+
+<div style="text-align: left;"><%= will_paginate @posts, renderer: BootstrapPagination::Rails, class: 'pagination-sm' %></div>
+
+<p>
+    <%= link_to 'New project', new_project_path, class: "btn btn-primary", role: "button" %>
+</p>
+
+
+
+<%= javascript_tag do %>
+      
+    $(function(){
+        $('.table tr[data-href]').each(function(){
+            $(this).css('cursor','pointer').hover(
+                function(){ 
+                    $(this).addClass('active'); 
+                },  
+                function(){ 
+                    $(this).removeClass('active'); 
+                }).click( function(){ 
+                    document.location = $(this).attr('data-href'); 
+                }
+            );
+        });
+    });
+
+<% end %>

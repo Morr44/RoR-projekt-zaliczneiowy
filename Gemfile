@@ -48,6 +48,8 @@ gem "therubyracer"
 gem "less-rails"
 gem 'twitter-bootstrap-rails'
 
+gem 'will_paginate-bootstrap'
+
 group :development, :test do
  gem 'rspec-rails'
  gem 'factory_girl_rails'
@@ -58,4 +60,10 @@ group :test do
  gem 'capybara'
  gem 'guard-rspec'
  gem 'launchy'
+ 
+ gem 'capybara'
+ gem 'spring-commands-rspec'
+ gem 'vcr'
+ gem 'webmock'
+ 
 end

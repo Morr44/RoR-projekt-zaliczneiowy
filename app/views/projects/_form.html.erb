@@ -14,18 +14,23 @@
   <% end %>
 
 
-  <p>
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </p>
- 
-  <p>
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </p>
- 
-  <p>
-    <%= f.submit %>
-  </p>
+    <p>
+      <%= f.label :name %><br>
+      <%= f.text_field :name, class:"form-control" %>
+    </p>
+   
+    <p>
+      <%= f.label :description %><br>
+      <%= f.text_area :description, class:"form-control", rows:"8"  %>
+    </p>
+   
+    <p>
+      <%= f.submit class: "btn btn-default", role: "button" %>
+    </p>
+    
+    <p>
+        <%= link_to 'Back', :back, class: "btn btn-primary", role: "button" %>
+    </p>
+      
   
 <% end %>

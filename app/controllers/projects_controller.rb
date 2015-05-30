@@ -2,14 +2,14 @@ class ProjectsController < ApplicationController
   
   def index
     if params[:private] == "true"
-      @projects = current_user.projects
+      @projects = current_user.projects.paginate(:page => params[:page], :per_page => 10)
       
     else
-      @projects = Project.all
+      @projects = Project.paginate(:page => params[:page], :per_page => 10)
     end
     
-    
   end
+
 
   def show
     @project = Project.find(params[:id])
@@ -55,6 +55,7 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    
     if check_if_owner
       @project = Project.find(params[:id])
       @project.destroy

@@ -12,7 +12,7 @@ class Project < ActiveRecord::Base
     end
     
     def add_associate(user)
-        unless self.users.include?(user)
+        unless self.users.include?(user) or user == nil
             self.users << user
         end
     end
