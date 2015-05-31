@@ -60,8 +60,6 @@ group :test do
  gem 'capybara'
  gem 'guard-rspec'
  gem 'launchy'
- 
- gem 'capybara'
  gem 'spring-commands-rspec'
  gem 'vcr'
  gem 'webmock'

@@ -19,12 +19,19 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require "paperclip/matchers"
-
+require_relative 'support/controller_helpers'
 require 'devise'
 
 RSpec.configure do |config|
   
-  config.include Devise::TestHelpers, :type => :controller
+  config.include ControllerHelpers, type: :controller
+  Warden.test_mode!
+
+  config.after do
+    Warden.test_reset!
+  end
+  
+  
   config.include Paperclip::Shoulda::Matchers
   
   # rspec-expectations config goes here. You can use an alternate

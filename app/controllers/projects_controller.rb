@@ -76,7 +76,6 @@ class ProjectsController < ApplicationController
     else
       redirect_to @project
     end
-    
   end
   
   def new_associate
@@ -85,17 +84,18 @@ class ProjectsController < ApplicationController
     end
   end
   
+  
   def invite
+    @project = Project.find(params[:id])
     if check_if_owner
-      @project = Project.find(params[:id])
       @user = User.where(:email => params[:email]).first
       @project.add_associate(@user)
       redirect_to @project
     else
       redirect_to @project
     end
-    
   end
+  
   
   def quit
     @project = Project.find(params[:id])

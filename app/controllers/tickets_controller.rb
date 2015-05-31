@@ -6,7 +6,6 @@ class TicketsController < ApplicationController
         @statuses = Ticket.statuses
         @project = Project.find(params[:project_id])
         @tickets = @project.tickets
-       
 
     end
     
@@ -80,6 +79,7 @@ class TicketsController < ApplicationController
     end
     
     def destroy
+        
         @project = Project.find(params[:project_id])
         @ticket = @project.tickets.find(params[:id])
         @ticket.destroy
