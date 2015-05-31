@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "AddNewProjects", type: :feature do
     
-    it "should require the user log in before adding a post" do
+    it "adding new project as signed in user" do
         
         @user = FactoryGirl.create(:user)
         expect( Project.count ).to eq(0)
@@ -29,9 +29,9 @@ RSpec.feature "AddNewProjects", type: :feature do
 
         click_link_or_button "Create Project"
 
-        expect( Project.count ).to eq(1)
-        expect( Project.first.name).to eq(name)
-        expect( Project.first.description).to eq(description)
+        expect(Project.count).to eq(1)
+        expect(Project.first.name).to eq(name)
+        expect(Project.first.description).to eq(description)
 
         expect(page).to have_content name
         expect(page).to have_content description

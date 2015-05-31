@@ -1,3 +1,10 @@
-<p>
-    <%= link_to "Download attachment", @ticket.attachment.url(:original, false) %>
-</p>
+
+<%= @ticket.priority %>
+<%= @ticket.title %>
+<%= @ticket.status %>
+
+<% if @ticket.attachment.exists? %>
+    <p>
+        <%= link_to @ticket.attachment_name, @ticket.attachment.url(:original, false) %>
+    </p
+<% end %>
