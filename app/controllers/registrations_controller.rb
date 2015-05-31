@@ -50,9 +50,7 @@ class RegistrationsController < Devise::RegistrationsController
         sign_in(resource_name, resource)
     else
       @project = Project.find(params[:project_id])
-      if current_user == @project.owner
-        @project.add_associate self.resource
-      end
+      @project.add_associate self.resource
       
     end
   end
