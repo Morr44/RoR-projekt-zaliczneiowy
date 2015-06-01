@@ -13,7 +13,10 @@ class TicketsController < ApplicationController
         @statuses = Ticket.statuses
         @project = Project.find(params[:project_id])
         @ticket = @project.tickets.find(params[:id])
-        @ticket.update_attributes(:reported => true)
+        
+        if @ticket.user_id == current_user.email
+            @ticket.update_attributes(:reported => true)
+        end
         
     end
     
@@ -34,7 +37,7 @@ class TicketsController < ApplicationController
         end
         
         if @ticket.save
-            redirect_to  project_tickets_path
+            redirect_to  project_ticket_path(:project_id => @project.id ,:id => @ticket.id)
         else 
             render 'new'
         end
@@ -47,7 +50,6 @@ class TicketsController < ApplicationController
         @statuses = Ticket.statuses
         @project = Project.find(params[:project_id])
         @ticket = @project.tickets.find(params[:id])
-        
         
     end
     
@@ -79,11 +81,10 @@ class TicketsController < ApplicationController
     end
     
     def destroy
-        
         @project = Project.find(params[:project_id])
         @ticket = @project.tickets.find(params[:id])
         @ticket.destroy
-        redirect_to project_tickets_path
+        redirect_to  project_tickets_path
         
     end
     

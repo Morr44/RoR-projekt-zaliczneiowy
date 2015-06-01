@@ -22,7 +22,7 @@ RSpec.feature "EditTickets", type: :feature do
         
         expect(page).to have_content @ticket.title
         
-        click_link_or_button "Edit"
+        visit edit_project_ticket_path(:id => @ticket.id, :project_id => @project.id)
         
         new_title = "New title"
         expect(@ticket.title).to_not eq(new_title)

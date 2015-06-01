@@ -1,34 +1,77 @@
-    <table>
-        
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Priority</th>
-            <th>Estimation</th>
-            <th>Status</th>
+<h2><%= "#{@project.name} tickets" %></h2>
+
+<% def display_ticekt(ticket) %>
+    <% if ticket.reported==false %>
+            <tr data-href= <%= project_ticket_path(:id => ticket.id, :project_id => ticket.project) %>>
+    <% else %>
+            <tr data-href= <%= project_ticket_path(:id => ticket.id, :project_id => ticket.project) %>>
+    <% end %>
+            <td>
+                <strong><%= ticket.title %></strong>
+            </td>
+            <td>
+                <%= ticket.description %>
+            </td>
+            <td>
+                <%= ticket.priority %>
+            </td>
+            <td>
+                <%= ticket.estimation %>
+            </td>
+            <td>
+                <%= User.where(:email => ticket.user_id).first.get_description %>
+            </td>
+            <td>
+                <%= ticket.status %>
+            </td>
+
         </tr>
+<% end %>
 
-        <% @tickets.each do |ticket| %>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
             <tr>
-              <td><%= ticket.title %></td>
-              <td><%= ticket.description %></td>
-              <td><%= ticket.priority %></td>
-              <td><%= ticket.estimation %></td>
-              <td><%= ticket.status %></td>
-              
-              <td><%= link_to 'Show', project_ticket_path(:id => ticket.id) %></td>
-              <td><%= link_to 'Edit', edit_project_ticket_path(:id => ticket.id) %></td>
-              <td><%= link_to 'Destroy', project_ticket_path(:id => ticket.id),
-                      method: :delete,
-                      data: { confirm: 'Are you sure?' } %></td>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Estimation</th>
+                <th>Assigned to</th>
+                <th>Status</th>
             </tr>
-        <% end %>
-
-    </table>
+        </thead>
+        
+       
+    <% @tickets.each do |ticket| %>
+        <% display_ticekt(ticket) %>
+    <% end %>
+</div>
+</table>
 
 <p>
-    <%= link_to 'New ticket', new_project_ticket_path %>
+    <%= link_to 'New ticket', new_project_ticket_path, class: "btn btn-default", role: "button" %>
 </p>
+
 <p>
-    <%= link_to 'Back', @project  %>
+    <%= link_to 'Back', @project, class: "btn btn-primary", role: "button"  %>
 </p>
+  
+<%= javascript_tag do %>
+      
+    $(function(){
+        $('.table tr[data-href]').each(function(){
+            $(this).css('cursor','pointer').hover(
+                function(){ 
+                    $(this).addClass('active'); 
+                },  
+                function(){ 
+                    $(this).removeClass('active'); 
+                }).click( function(){ 
+                    document.location = $(this).attr('data-href'); 
+                }
+            );
+        });
+    });
+
+<% end %>
+

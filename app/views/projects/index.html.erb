@@ -1,26 +1,26 @@
-
-<table class="table table-hover">
-  
-  <thead>
-    <tr>
-      <th>Project name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
- 
-  <tbody>
-    <% @projects.each do |project| %>
-      <tr data-href= <%= project_path(project) %>>
-        
-        <td><%= project.name %></td>
-        <td style="width:75%;"><%= project.description %></td>
+<div class="table-responsive">
+  <table class="table table-hover">
+    
+    <thead>
+      <tr>
+        <th>Project name</th>
+        <th>Description</th>
       </tr>
-    <% end %>
-  </tbody>
-  
-  
-</table>
-
+    </thead>
+   
+    <tbody>
+      <% @projects.each do |project| %>
+        <tr data-href= <%= project_path(project) %>>
+          
+          <td style="width:12%"><%= project.name %></td>
+          <td><%= project.description %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    
+    
+  </table>
+</div>
 
 
 <div style="text-align: left;"><%= will_paginate @posts, renderer: BootstrapPagination::Rails, class: 'pagination-sm' %></div>
