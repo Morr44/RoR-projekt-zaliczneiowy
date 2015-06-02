@@ -18,10 +18,6 @@ RSpec.feature "EditTickets", type: :feature do
 
         click_link_or_button "Log in"
         
-        click_link_or_button "Tickets"
-        
-        expect(page).to have_content @ticket.title
-        
         visit edit_project_ticket_path(:id => @ticket.id, :project_id => @project.id)
         
         new_title = "New title"

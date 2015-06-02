@@ -1,5 +1,6 @@
+
 <%= form_for [@project, @ticket], :html => { :multipart => true } do |f| %>
-  
+
   <%= javascript_tag do %>
   $(document).ready(function(){
   
@@ -34,22 +35,22 @@
 
   <p>
     <%= f.label :title %><br>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, class: "form-control" %>
   </p>
  
   <p>
     <%= f.label :description %><br>
-    <%= f.text_area :description %>
+    <%= f.text_area :description,class: "form-control", rows:3; %>
   </p>
  
   <p>
     <%= f.label :priority %><br>
-    <%= f.number_field :priority %>
+    <%= f.number_field :priority,class: "form-control" %>
   </p>
   
   <p>
     <%= f.label :estimation %><br>
-    <%= f.number_field :estimation %>
+    <%= f.number_field :estimation,class: "form-control" %>
   </p>
   
   </p>
@@ -64,13 +65,14 @@
     <%= f.label :attach, 'Attachment' %>
     </label>
     
-    <div id="attachment-form" style="padding:5px; border:1px #CCCCCC dashed">
+    <div id="attachment-form" class="well">
       <p>
         <%= f.label :attachment_name %><br>
-        <%= f.text_field :attachment_name %>
+        <%= f.text_field :attachment_name, class: "form-control" %>
       </p>
       <p>
-        <%= f.file_field :attachment %>
+
+        <%= f.file_field :attachment%>
       </p>
     </div>
   </p>
@@ -83,8 +85,8 @@
   
 
   
-  <p>
-    <%= f.submit %>
-  </p>
+    <p>
+      <%= f.submit class: "btn btn-default", role: "button" %>
+    </p>
   
 <% end %>

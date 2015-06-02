@@ -19,7 +19,7 @@ RSpec.feature "AddNewAssociatedUsers", type: :feature do
         
         
         
-        click_link_or_button "Create new developer account"
+        click_link_or_button "New developer account"
         
         within "#new_user" do
             fill_in "user_email", with: user_attributes[:email]

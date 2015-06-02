@@ -1,16 +1,20 @@
-<h2><%= "My tickets" %></h2>
+<div class="page-header">
+  <h1> My tickets</h1>
+</div>
 
 <% def display_ticekt(ticket) %>
-    <% if ticket.reported==false %>
-            <tr data-href= <%= project_ticket_path(:id => ticket.id, :project_id => ticket.project) %> class="success">
-    <% else %>
-            <tr data-href= <%= project_ticket_path(:id => ticket.id, :project_id => ticket.project) %>>
-    <% end %>
+
+        <tr data-href= <%= project_ticket_path(:id => ticket.id, :project_id => ticket.project) %>>
             <td>
                 <strong><%= ticket.project.name %></strong>
             </td>
             <td>
-                <%= ticket.title %>
+                <span style="white-space: nowrap;">
+                    <%= ticket.title %>
+                    <% if ticket.reported==false %>
+                        <span class="label label-default">New</span>
+                    <% end %>
+                </span>
             </td>
             <td>
                 <%= ticket.description %>

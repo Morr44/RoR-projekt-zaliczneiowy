@@ -1,4 +1,6 @@
-<h2><%= "#{@project.name} tickets" %></h2>
+<div class="page-header">
+    <h1> <%= @project.name %> <small>Tickets</small></h1>
+</div>
 
 <% def display_ticekt(ticket) %>
     <% if ticket.reported==false %>

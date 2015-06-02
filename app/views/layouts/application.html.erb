@@ -60,11 +60,14 @@
           </li>
         
           <% else %>
-          <li>
-            <div class="btn-group" role="group" aria-label="...">
+          
+            <li><%= link_to "Login", new_user_session_path %></li>
+            <li>
+            <div>
               
-              <%= link_to "Sign up", new_user_registration_path, class: "btn btn-default btn-sm navbar-btn", role: "button" %>
-              <%= link_to "Login", new_user_session_path, class: "btn btn-primary btn-sm navbar-btn", role: "button" %>
+             
+              
+              <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary navbar-btn", role: "button" %>
               
             </div>
           </li>

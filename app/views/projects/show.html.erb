@@ -1,68 +1,85 @@
 
-<h2><%= @project.name %></h2>
+      <div style="float:right;">
+        <% if @project.owner == current_user %>
 
-  <strong>Description:</strong>
-  <%= @project.description %>
-</p>
+            <div class="dropdown" style="display:inline-block;">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                Manage developers
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" data-toggle="modal" data-target="#changeOwner" style="cursor:pointer;">Change owner</a></li>
+                <li role="presentation"><%= link_to 'New developer account', {:action => :new_associate}, role: "menuitem" %></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" data-toggle="modal" data-target="#invite" style="cursor:pointer;">Invite developer</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" data-toggle="modal" data-target="#forceQuit" style="cursor:pointer;">Remove developer</a></li>
+              </ul>
+            </div>
 
-<p>
-  <strong>Developers:</strong>
-  <% @project.users.each do |u| %>
-    <p>
-      <%= u.get_description %>
-        <% if u==@project.owner %>
-          <strong>(Project owner)</strong>
+            <%= link_to 'Edit project', edit_project_path(@project), class: "btn btn-default", role: "button"  %>
+
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteProject">Delete project</button>
+
+          
+            <% end %>
+            <% if @project.users.include?(current_user) %>
+            <% unless @project.owner == current_user %>
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#quitProject">Quit project</button>
+            <% end %>
+
+         <% end %>
+      </div>
+
+
+  
+        <div class="page-header">
+          <h1> <%= @project.name %></h1>
+        </div>
+        
+        <p>
+          <strong>Description:</strong>
+          <%= @project.description %>
+        </p>
+        
+        
+          <div class="panel panel-default">
+            <div class="panel-heading"><strong>Developers:</strong></div>
+            <div class="panel-body">
+        
+            <ul style="list-style-type: circle; padding-left:10px;">
+          
+            <% @project.users.each do |u| %>
+              <li>
+                <%= u.get_description %>
+                  <% if u==@project.owner %>
+                    <strong>(Project owner)</strong>
+                  <% end %>
+                </li>
+          
+            <% end %>
+            </ul>
+          </div>
+        </div>
+        <% if @project.users.include?(current_user) %>
+          <p>
+              <%= link_to 'Tickets', [@project, :tickets], class: "btn btn-lg btn-primary", role: "button"  %>
+          </p>
         <% end %>
-    <p>
-  <% end %>
-  
-
-</p>
 
 
-<% if @project.users.include?(current_user) %>
-  <p>
-      <%= link_to 'Tickets', [@project, :tickets], class: "btn btn-default", role: "button"  %>
-  </p>
-  <% unless @project.owner == current_user %>
-    <p>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#quitProject">Quit project</button>
-    </p>
-  <% end %>
-<% end %>
 
 
-<% if @project.owner == current_user %>
 
-  <p>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeOwner">Change owner</button>
-  </p>
-  
-  <p>
-    <%= link_to 'Create new developer account', {:action => :new_associate}, class: "btn btn-default", role: "button"  %>
-  </p>
-  
-  <p>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#forceQuit">Remove developer</button>
-  </p>
-  
-  <p>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#invite">Invite developer</button>
-  </p>
-  
-  <p>
-    <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-default", role: "button"  %>
-  </p>
-  
-  <p>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteProject">Delete project</button>
-  </p>
-  
-<% end %>
 
-<p>
-    <%= link_to 'Back', projects_path, class: "btn btn-primary", role: "button" %>
-</p>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -183,7 +200,7 @@
       </div>
       <div class="modal-body">
           <p>
-            <%= email_field_tag 'email' %>
+            <%= email_field_tag 'email', "", class:"form-control" %>
           </p>
       </div>
       <div class="modal-footer">

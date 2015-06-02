@@ -1,3 +1,11 @@
+<div class="page-header">
+  <% if params[:private] == "true" %>
+    <h1> Browse <small>My projects</small></h1>
+  <% else %>
+    <h1> Browse <small>All projects</small></h1>
+  <% end %>
+  
+</div>
 <div class="table-responsive">
   <table class="table table-hover">
     
